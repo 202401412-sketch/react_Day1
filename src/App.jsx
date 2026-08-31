@@ -1,51 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useTasks } from './hooks/useTasks';
 import { Header } from './components/Header';
+import { StyledControls } from './components/StyledControls';
 import { TaskList } from './components/TaskList';
 
 export default function App() {
-  const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [showOnlyIncomplete, setShowOnlyIncomplete] = useState(false);
-
-  useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/todos?_limit=6')
-      .then((res) => res.json())
-      .then((data) => {
-        const formattedTasks = data.map((item) => ({
-          id: item.id,
-          title: item.title,
-          category: item.id % 2 === 0 ? 'Development' : 'Design',
-          isCompleted: item.completed,
-          priority: item.id % 3 === 0 ? 'High' : 'Medium',
-        }));
-        setTasks(formattedTasks);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error('Error fetching tasks:', err);
-        setLoading(false);
-      });
-  }, []);
-
-  const handleToggleTask = (id) => {
-    setTasks((prev) =>
-      prev.map((task) =>
-        task.id === id ? { ...task, isCompleted: !task.isCompleted } : task
-      )
-    );
-  };
-
-  const totalCount = tasks.length;
-  const pendingCount = tasks.filter((t) => !t.isCompleted).length;
+  const {
+    tasks,
+    showOnlyIncomplete,
+    setShowOnlyIncomplete,
+    handleToggleTask,
+    pendingCount,
+    totalCount,
+  } = useTasks();
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      backgroundColor: '#f4f6f8',
-      padding: '40px 20px',
-      fontFamily: 'Segoe UI, Roboto, sans-serif'
-    }}>
-      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+    <div className="app-wrapper">
+      <div className="container">
         <Header
           title="Project Task Tracker"
           totalCount={totalCount}
@@ -53,33 +24,25 @@ export default function App() {
         />
 
         <main>
-          <div style={{ marginBottom: '20px' }}>
-            <button
-              onClick={() => setShowOnlyIncomplete(!showOnlyIncomplete)}
-              style={{
-                backgroundColor: '#2563eb',
-                color: '#fff',
-                border: 'none',
-                padding: '10px 20px',
-                borderRadius: '8px',
-                fontWeight: '600',
-                cursor: 'pointer'
-              }}
-            >
-              {showOnlyIncomplete ? 'Show All Tasks' : 'Show Pending Only'}
-            </button>
-          </div>
+          <StyledControls
+            showOnlyIncomplete={showOnlyIncomplete}
+            setShowOnlyIncomplete={setShowOnlyIncomplete}
+            totalCount={totalCount}
+            pendingCount={pendingCount}
+          />
 
-          {loading ? (
-            <p style={{ color: '#666', textAlign: 'center' }}>⏳ Loading tasks from API...</p>
-          ) : (
-            <TaskList
-              tasks={tasks}
-              onToggleStatus={handleToggleTask}
-              showOnlyIncomplete={showOnlyIncomplete}
-            />
-          )}
+          <TaskList
+            tasks={tasks}
+            onToggleStatus={handleToggleTask}
+            showOnlyIncomplete={showOnlyIncomplete}
+          />
         </main>
+
+        <footer className="app-footer">
+          <p className="mb-0">
+            Assignment 2: Project Task Tracker &bull; Built with React Hooks, Custom Hooks, Bootstrap, and 4 Styling Approaches
+          </p>
+        </footer>
       </div>
     </div>
   );

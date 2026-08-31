@@ -1,69 +1,46 @@
 import React from 'react';
+import styles from './TaskCard.module.css';
 
+// Approach 3: CSS Modules combined with Bootstrap Card and Utility Classes
 export const TaskCard = ({ task, onToggleStatus }) => {
   const { id, title, category, isCompleted, priority } = task;
 
+  // Determine priority CSS Module class based on priority level
+  const priorityClass =
+    priority === 'High'
+      ? styles.priorityHigh
+      : priority === 'Medium'
+      ? styles.priorityMedium
+      : styles.priorityLow;
+
+  const cardBorderClass = isCompleted ? styles.completedCard : styles.pendingCard;
+
   return (
-    <div style={{
-      background: '#ffffff',
-      borderRadius: '12px',
-      padding: '24px',
-      boxShadow: '0 4px 14px rgba(0,0,0,0.06)',
-      borderLeft: isCompleted ? '6px solid #22c55e' : '6px solid #3b82f6',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      minHeight: '180px',
-      opacity: isCompleted ? 0.65 : 1,
-      boxSizing: 'border-box'
-    }}>
-      <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-          <span style={{
-            fontSize: '13px',
-            fontWeight: 'bold',
-            padding: '4px 10px',
-            borderRadius: '6px',
-            background: priority === 'High' ? '#fee2e2' : '#ffedd5',
-            color: priority === 'High' ? '#dc2626' : '#c2410c'
-          }}>
-            {priority} Priority
-          </span>
-          <span style={{ fontSize: '13px', color: '#64748b', fontWeight: '600' }}>{category}</span>
+    <div className={`card shadow-sm h-100 ${styles.card} ${cardBorderClass}`}>
+      <div className="card-body d-flex flex-column justify-content-between">
+        <div>
+          <div className="d-flex justify-content-between align-items-center mb-2">
+            <span className={priorityClass}>{priority} Priority</span>
+            <span className={styles.categoryTag}>{category}</span>
+          </div>
+
+          <h3 className={`${styles.taskTitle} ${isCompleted ? styles.completedTitle : ''}`}>
+            {title}
+          </h3>
         </div>
 
-        <h3 style={{
-          fontSize: '18px',
-          fontWeight: '600',
-          color: '#1e293b',
-          marginBottom: '20px',
-          lineHeight: '1.4',
-          textDecoration: isCompleted ? 'line-through' : 'none'
-        }}>
-          {title}
-        </h3>
-      </div>
+        <div className="d-flex justify-content-between align-items-center mt-3 pt-2 border-top">
+          <button
+            onClick={() => onToggleStatus(id)}
+            className={`btn btn-sm ${isCompleted ? 'btn-outline-secondary' : 'btn-primary'}`}
+          >
+            {isCompleted ? '✓ Mark Pending' : 'Mark Complete'}
+          </button>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto' }}>
-        <button 
-          onClick={() => onToggleStatus(id)}
-          style={{
-            background: isCompleted ? '#f1f5f9' : '#2563eb',
-            color: isCompleted ? '#475569' : '#ffffff',
-            border: isCompleted ? '1px solid #cbd5e1' : 'none',
-            padding: '10px 16px',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            fontWeight: '600',
-            fontSize: '14px'
-          }}
-        >
-          {isCompleted ? 'Mark Pending' : 'Mark Complete'}
-        </button>
-
-        {!isCompleted && priority === 'High' && (
-          <span style={{ fontSize: '13px', color: '#dc2626', fontWeight: 'bold' }}>⚠️ Urgent</span>
-        )}
+          {!isCompleted && priority === 'High' && (
+            <span className={styles.urgentBadge}>⚠️ Urgent</span>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,0 +1,81 @@
+/* Approach 3: CSS Modules */
+.card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 14px;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.completedCard {
+  border-left: 6px solid #22c55e !important;
+  opacity: 0.75;
+  background-color: #f8fafc;
+}
+
+.pendingCard {
+  border-left: 6px solid #3b82f6 !important;
+}
+
+.categoryTag {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #64748b;
+}
+
+.priorityHigh {
+  background-color: #fee2e2;
+  color: #dc2626;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.priorityMedium {
+  background-color: #fef3c7;
+  color: #d97706;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.priorityLow {
+  background-color: #e0f2fe;
+  color: #0284c7;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.taskTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1.4;
+  margin-top: 12px;
+  margin-bottom: 16px;
+}
+
+.completedTitle {
+  text-decoration: line-through;
+  color: #94a3b8;
+}
+
+.urgentBadge {
+  font-size: 12px;
+  font-weight: 700;
+  color: #dc2626;
+  background-color: #fff1f2;
+  border: 1px solid #fecdd3;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
