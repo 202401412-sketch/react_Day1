@@ -1,49 +1,37 @@
 import React from 'react';
-import { useTasks } from './hooks/useTasks';
-import { Header } from './components/Header';
-import { StyledControls } from './components/StyledControls';
-import { TaskList } from './components/TaskList';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Navbar } from './components/Navbar';
+import { Home } from './pages/Home';
+import { About } from './pages/About';
+import { Contact } from './pages/Contact';
+import { NotFound } from './pages/NotFound';
 
 export default function App() {
-  const {
-    tasks,
-    showOnlyIncomplete,
-    setShowOnlyIncomplete,
-    handleToggleTask,
-    pendingCount,
-    totalCount,
-  } = useTasks();
-
   return (
-    <div className="app-wrapper">
-      <div className="container">
-        <Header
-          title="Project Task Tracker"
-          totalCount={totalCount}
-          pendingCount={pendingCount}
-        />
+    <BrowserRouter>
+      <div className="app-shell d-flex flex-column min-vh-100 bg-light">
+        <Navbar />
 
-        <main>
-          <StyledControls
-            showOnlyIncomplete={showOnlyIncomplete}
-            setShowOnlyIncomplete={setShowOnlyIncomplete}
-            totalCount={totalCount}
-            pendingCount={pendingCount}
-          />
-
-          <TaskList
-            tasks={tasks}
-            onToggleStatus={handleToggleTask}
-            showOnlyIncomplete={showOnlyIncomplete}
-          />
+        <main className="container flex-grow-1 my-4">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
         </main>
 
-        <footer className="app-footer">
-          <p className="mb-0">
-            Assignment 2: Project Task Tracker &bull; Built with React Hooks, Custom Hooks, Bootstrap, and 4 Styling Approaches
-          </p>
+        <footer className="bg-dark text-light py-4 text-center mt-auto border-top border-secondary">
+          <div className="container">
+            <p className="mb-1 fw-semibold">
+              Assignment 3 &bull; React Router, Custom Hooks, Form Validation & Axios Integration
+            </p>
+            <small className="text-secondary">
+              Built with React 19, React Router DOM 7, Bootstrap 5, & Axios
+            </small>
+          </div>
         </footer>
       </div>
-    </div>
+    </BrowserRouter>
   );
 }
