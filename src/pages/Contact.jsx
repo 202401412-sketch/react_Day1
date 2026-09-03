@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from '../hooks/useForm';
+import { useTheme } from '../context/ThemeContext';
 
 // Form validation logic for 5 required fields
 function validateContactForm(values) {
@@ -51,17 +52,24 @@ export function Contact() {
     handleChange,
     handleSubmit,
     resetForm,
-  } = useForm(initialFormValues, validateContactForm, 'https://jsonplaceholder.typicode.com/posts');
+  } = useForm(initialFormValues, validateContactForm, 'https://reqres.in/api/users');
+
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
 
   return (
     <div className="contact-page py-4">
       <div className="row justify-content-center">
         <div className="col-md-10 col-lg-8">
-          <div className="card border-0 shadow-lg rounded-4 overflow-hidden">
-            <div className="card-header bg-dark text-white p-4">
+          <div
+            className={`card border-0 shadow-lg rounded-4 overflow-hidden ${
+              isDark ? 'bg-dark text-white border border-secondary' : 'bg-white text-dark'
+            }`}
+          >
+            <div className="card-header bg-primary text-white p-4">
               <h2 className="card-title fw-bold mb-1">Contact / Registration Form</h2>
-              <p className="card-subtitle text-light opacity-75 mb-0 small">
-                Submit your details below. Validated via `useForm` custom hook & submitted via `axios`.
+              <p className="card-subtitle text-white-50 mb-0 small">
+                Assignment 3 &bull; Validated via `useForm` custom hook & submitted via `axios` POST.
               </p>
             </div>
 
@@ -74,12 +82,12 @@ export function Contact() {
                     <h5 className="alert-heading fw-bold mb-0">Form Submitted Successfully!</h5>
                   </div>
                   <p className="mb-2 text-dark">
-                    Your data was transmitted to the API endpoint via Axios POST request.
+                    Your data was transmitted to <code>https://reqres.in/api/users</code> via Axios POST request.
                   </p>
                   {responseData && (
                     <div className="bg-white p-3 rounded-2 border border-success border-opacity-50">
                       <small className="fw-bold text-success d-block mb-1">API Response Payload:</small>
-                      <pre className="mb-0 small text-dark" style={{ maxHeight: '120px', overflowY: 'auto' }}>
+                      <pre className="mb-0 small text-dark" style={{ maxHeight: '140px', overflowY: 'auto' }}>
                         {JSON.stringify(responseData, null, 2)}
                       </pre>
                     </div>
@@ -110,7 +118,9 @@ export function Contact() {
                   </label>
                   <input
                     type="text"
-                    className={`form-control form-control-lg ${errors.fullName ? 'is-invalid' : ''}`}
+                    className={`form-control form-control-lg ${errors.fullName ? 'is-invalid' : ''} ${
+                      isDark ? 'bg-secondary bg-opacity-25 text-white border-secondary' : ''
+                    }`}
                     id="fullName"
                     name="fullName"
                     placeholder="John Doe"
@@ -128,7 +138,9 @@ export function Contact() {
                   </label>
                   <input
                     type="email"
-                    className={`form-control form-control-lg ${errors.email ? 'is-invalid' : ''}`}
+                    className={`form-control form-control-lg ${errors.email ? 'is-invalid' : ''} ${
+                      isDark ? 'bg-secondary bg-opacity-25 text-white border-secondary' : ''
+                    }`}
                     id="email"
                     name="email"
                     placeholder="john@example.com"
@@ -146,7 +158,9 @@ export function Contact() {
                   </label>
                   <input
                     type="password"
-                    className={`form-control form-control-lg ${errors.password ? 'is-invalid' : ''}`}
+                    className={`form-control form-control-lg ${errors.password ? 'is-invalid' : ''} ${
+                      isDark ? 'bg-secondary bg-opacity-25 text-white border-secondary' : ''
+                    }`}
                     id="password"
                     name="password"
                     placeholder="Minimum 6 characters"
@@ -155,7 +169,9 @@ export function Contact() {
                     disabled={isSubmitting}
                   />
                   {errors.password && <div className="invalid-feedback">{errors.password}</div>}
-                  <small className="form-text text-muted">Must contain at least 6 characters.</small>
+                  <small className={isDark ? 'text-light opacity-75' : 'text-muted'}>
+                    Must contain at least 6 characters.
+                  </small>
                 </div>
 
                 {/* 4. Phone Number */}
@@ -165,7 +181,9 @@ export function Contact() {
                   </label>
                   <input
                     type="tel"
-                    className={`form-control form-control-lg ${errors.phone ? 'is-invalid' : ''}`}
+                    className={`form-control form-control-lg ${errors.phone ? 'is-invalid' : ''} ${
+                      isDark ? 'bg-secondary bg-opacity-25 text-white border-secondary' : ''
+                    }`}
                     id="phone"
                     name="phone"
                     placeholder="+1 (555) 000-0000"
@@ -182,7 +200,9 @@ export function Contact() {
                     Message / Address <span className="text-danger">*</span>
                   </label>
                   <textarea
-                    className={`form-control form-control-lg ${errors.message ? 'is-invalid' : ''}`}
+                    className={`form-control form-control-lg ${errors.message ? 'is-invalid' : ''} ${
+                      isDark ? 'bg-secondary bg-opacity-25 text-white border-secondary' : ''
+                    }`}
                     id="message"
                     name="message"
                     rows="4"

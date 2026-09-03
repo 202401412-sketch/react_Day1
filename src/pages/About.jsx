@@ -1,68 +1,66 @@
 import React from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 export function About() {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+
   return (
     <div className="about-page py-4">
       {/* Page Header */}
       <div className="text-center mb-5">
-        <h1 className="fw-bold display-5">About This Application</h1>
-        <p className="lead text-muted mx-auto" style={{ maxWidth: '700px' }}>
-          Designed for Assignment 3 to showcase advanced frontend architecture, client-side routing, custom hook patterns, and HTTP REST integration.
+        <h1 className="fw-bold display-5">Unified SPA Architecture Overview</h1>
+        <p className="lead text-muted mx-auto" style={{ maxWidth: '750px' }}>
+          This application seamlessly integrates all technical requirements from <strong>Assignments 1, 2, 3, and 4</strong> into a single production-ready React application.
         </p>
       </div>
 
-      {/* Main Info Card */}
-      <div className="row justify-content-center mb-5">
-        <div className="col-lg-10">
-          <div className="card border-0 shadow-sm rounded-4 overflow-hidden">
-            <div className="card-header bg-primary text-white py-3 px-4">
-              <h4 className="mb-0 fw-bold">💡 Technical Overview</h4>
-            </div>
-            <div className="card-body p-4 p-md-5">
-              <h5 className="fw-bold mb-3">Architectural Philosophy</h5>
-              <p className="text-secondary">
-                Modern React applications rely heavily on separation of concerns. By delegating side-effects, form state, and REST API communication to a reusable custom hook (`useForm`), our component layer remains declarative, clean, and easy to maintain.
+      {/* Grid of 4 Assignment Cards */}
+      <div className="row g-4 mb-5">
+        <div className="col-md-6 col-lg-3">
+          <div className={`card h-100 border-0 shadow-sm rounded-4 ${isDark ? 'bg-dark text-white border border-secondary' : 'bg-white text-dark'}`}>
+            <div className="card-body p-4 text-center">
+              <span className="badge bg-primary fs-6 mb-3">Assignment 1</span>
+              <h5 className="fw-bold">React Fundamentals</h5>
+              <p className="small text-muted mb-0">
+                JSX architecture, component breakdown, prop drilling, conditional rendering (`? :` & `&&`), dynamic styling logic.
               </p>
-              <hr className="my-4" />
+            </div>
+          </div>
+        </div>
 
-              <h5 className="fw-bold mb-3">Stack Specifications</h5>
-              <div className="row g-3">
-                <div className="col-md-6">
-                  <div className="p-3 bg-light rounded-3 border">
-                    <h6 className="fw-bold text-dark mb-1">React Router DOM 7</h6>
-                    <small className="text-muted">
-                      Handles client-side routing, route matchers, parameters, navigation links, and 404 fallback matching without page reloads.
-                    </small>
-                  </div>
-                </div>
+        <div className="col-md-6 col-lg-3">
+          <div className={`card h-100 border-0 shadow-sm rounded-4 ${isDark ? 'bg-dark text-white border border-secondary' : 'bg-white text-dark'}`}>
+            <div className="card-body p-4 text-center">
+              <span className="badge bg-success fs-6 mb-3">Assignment 2</span>
+              <h5 className="fw-bold">Hooks & 4 Styling Modes</h5>
+              <p className="small text-muted mb-0">
+                Custom `useTasks` hook, `localStorage` persistence, Inline Styles (Header), Styled Components (Controls), CSS Modules (TaskCard), & Traditional CSS.
+              </p>
+            </div>
+          </div>
+        </div>
 
-                <div className="col-md-6">
-                  <div className="p-3 bg-light rounded-3 border">
-                    <h6 className="fw-bold text-dark mb-1">Axios HTTP Client</h6>
-                    <small className="text-muted">
-                      Promise-based HTTP client for API interactions with automated JSON transformation and comprehensive error interception.
-                    </small>
-                  </div>
-                </div>
+        <div className="col-md-6 col-lg-3">
+          <div className={`card h-100 border-0 shadow-sm rounded-4 ${isDark ? 'bg-dark text-white border border-secondary' : 'bg-white text-dark'}`}>
+            <div className="card-body p-4 text-center">
+              <span className="badge bg-warning text-dark fs-6 mb-3">Assignment 3</span>
+              <h5 className="fw-bold">Router, Forms & Axios</h5>
+              <p className="small text-muted mb-0">
+                React Router DOM 7, custom `useForm` hook, 5 validated input fields, Axios POST to reqres.in API, and 404 fallback routing.
+              </p>
+            </div>
+          </div>
+        </div>
 
-                <div className="col-md-6">
-                  <div className="p-3 bg-light rounded-3 border">
-                    <h6 className="fw-bold text-dark mb-1">Custom Hook (`useForm`)</h6>
-                    <small className="text-muted">
-                      Centralizes form values, validation logic, submission state, error states, and success responses across the app.
-                    </small>
-                  </div>
-                </div>
-
-                <div className="col-md-6">
-                  <div className="p-3 bg-light rounded-3 border">
-                    <h6 className="fw-bold text-dark mb-1">Bootstrap 5 Integration</h6>
-                    <small className="text-muted">
-                      Responsive grid layout system (`container`, `row`, `col`), forms (`is-invalid`, `form-control`), and interactive utilities (`alert`, `badge`, `spinner`).
-                    </small>
-                  </div>
-                </div>
-              </div>
+        <div className="col-md-6 col-lg-3">
+          <div className={`card h-100 border-0 shadow-sm rounded-4 ${isDark ? 'bg-dark text-white border border-secondary' : 'bg-white text-dark'}`}>
+            <div className="card-body p-4 text-center">
+              <span className="badge bg-info text-dark fs-6 mb-3">Assignment 4</span>
+              <h5 className="fw-bold">Dual State Management</h5>
+              <p className="small text-muted mb-0">
+                Theme Context API for global Light/Dark mode + Redux Toolkit store (`cartSlice`) for shopping cart state & Navbar count badge.
+              </p>
             </div>
           </div>
         </div>
